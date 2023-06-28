@@ -1,0 +1,107 @@
+version: "3.3"
+services:
+  sdmrdfizer_ldm:
+    image: sdmtib/sdmrdfizer:latest
+    hostname: sdmrdfizer_ldm 
+    container_name: sdmrdfizer_ldm
+    domainname: ldm
+    volumes:
+      - ./data:/data
+      - ./rdf:/data/rdf-dump
+      - ./KGC-DIS/SDM-RDFizer-Configs:/data/configs
+      - ./KGC-DIS/CSV2RDF-RMLMappingRules:/data/mappings
+      - ./scripts:/data/scripts
+      - ./KGC-DIS:/data/ttl
+    networks:
+      - ldm
+    depends_on:
+      - ldmkg
+    environment:
+      - SPARQL_ENDPOINT_IP=ldmkg
+      - SPARQL_ENDPOINT_USER=dba
+      - SPARQL_ENDPOINT_PASSWD=dba
+      - SPARQL_ENDPOINT_PORT=1111
+      - SPARQL_ENDPOINT_GRAPH=http://research.tib.eu/ldm
+      - RDF_DUMP_FOLDER_PATH=/data/rdf-dump/
+      - TTL_DUMP_FOLDER_PATH=/data/ttl/
+      - SPARQL_MAPPINGS_ENDPOINT_IP=ldm_mappings
+      
+
+  ldmkg:
+    image: kemele/virtuoso:7-stable
+    hostname: ldmkg
+    container_name: ldmkg
+    domainname: ldm
+    volumes:
+      - ./rdf-dump:/data
+      - ./rdf:/data/rdf-dump
+      - ./KGC-DIS:/data/ttl
+    ports:
+      - "18001:8890"
+    networks:
+      - ldm
+      
+  ldm_mappings:
+    image: kemele/virtuoso:7-stable
+    hostname: ldm_mappings
+    container_name: ldm_mappings
+    domainname: ldm
+    volumes:
+      - ./rdf-dump-mappings:/data
+      - ./KGC-DIS:/data/ttl
+    ports:
+      - "18002:8890"
+    networks:
+      - ldm
+ 
+#    ldm_exp_api:
+#     image: sdmtib/ldm_exploration:2.0
+#     hostname: ldm_exploration_api
+#     container_name: ldm_exploration_api
+#     domainname: ldm
+#     ports:
+#       - "18873:5000"
+#     environment:
+#       - ENDPOINT=http://node2.research.tib.eu:8893/sparql
+#     networks:
+#       - ldm
+      
+  ldm_dereferencing:
+    image: asanchez75/pubby:v0.3.3
+    hostname: pubby
+    container_name: ldm_pubby
+    domainname: ldm
+    ports:
+        - "18003:8080"
+    networks:
+      - ldm
+    environment:
+      SPARQL_ENDPOINT: "https://labs.tib.eu/sdm/ldm_kg/sparql"
+      PROJECT_HOMEPAGE_URL: "http://research.tib.eu/ldm/"
+      PROJECT_NAME: "ldm"
+      DEFAULT_RESOURCE: "http://research.tib.eu/ldm/entity/C0168273"
+      DEFAULT_NAMED_GRAPH: "http://research.tib.eu/ldm"
+      COMMON_URI_PREFIX: "http://research.tib.eu/ldm/"
+      WEB_RESOURCE_PREFIX: ""
+      PUBBY_ROOT_URL: "https://research.tib.eu/ldm/"
+    restart: always
+    tty: true
+    
+          
+  ldm_detrusty:
+    image: sdmtib/detrusty:0.12.0
+    hostname: detrusty
+    container_name: ldm_detrusty
+    domainname: ldm
+    volumes:
+      - ./DeTrusty/Config/:/DeTrusty/Config/
+    ports:
+      - "18004:5000"
+    networks:
+      - ldm
+    depends_on:
+      - ldmkg
+
+networks:
+  ldm:
+    external: false
