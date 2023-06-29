@@ -77,11 +77,11 @@ services:
       - ldm
     environment:
       SPARQL_ENDPOINT: "https://labs.tib.eu/sdm/ldm_kg/sparql"
-      PROJECT_HOMEPAGE_URL: "http://research.tib.eu/ldm/"
+      PROJECT_HOMEPAGE_URL: "https://research.tib.eu/ldm/"
       PROJECT_NAME: "ldm"
-      DEFAULT_RESOURCE: "http://research.tib.eu/ldm/entity/C0168273"
+      DEFAULT_RESOURCE: "https://research.tib.eu/ldm/c9540cd0-ade4-4f17-b346-53f464a95aca"
       DEFAULT_NAMED_GRAPH: "http://research.tib.eu/ldm"
-      COMMON_URI_PREFIX: "http://research.tib.eu/ldm/"
+      COMMON_URI_PREFIX: "https://research.tib.eu/ldm/"
       WEB_RESOURCE_PREFIX: ""
       PUBBY_ROOT_URL: "https://research.tib.eu/ldm/"
     restart: always
