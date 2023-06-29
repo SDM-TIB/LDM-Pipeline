@@ -23,7 +23,15 @@
 
   rr:subjectMap [
     rr:template "https://research.tib.eu/ldm/{id}";
-    rr:class dcat:dataset;
+    rr:class dcat:Dataset;
+  ];
+
+  rr:predicateObjectMap [
+    rr:predicate dct:identifier;
+    rr:objectMap [
+      rr:template "https://doi.org/{doi}";
+      rr:termType rr:Literal
+    ]
   ];
 
   rr:predicateObjectMap [
@@ -94,7 +102,7 @@
 
   rr:subjectMap [
     rr:template "https://research.tib.eu/ldm/{id}";
-    rr:class dcat:dataset;
+    rr:class dcat:Dataset;
     
   ];
 
@@ -129,7 +137,7 @@
 
   rr:subjectMap [
     rr:template "https://research.tib.eu/ldm/{doi}";
-    rr:class dcat:dataset;
+    rr:class dcat:Dataset;
     
   ];
 
@@ -149,13 +157,13 @@
 
   rr:subjectMap [
     rr:template "https://research.tib.eu/ldm/{doi}";
-    rr:class dcat:dataset;
+    rr:class dcat:Dataset;
   ];
 
   rr:predicateObjectMap [
     rr:predicate dcat:keyword;
     rr:objectMap [
-      rml:reference "name"
+      rr:template "https://research.tib.eu/ldm/{id}"
     ]
   ].
 
@@ -168,7 +176,6 @@
 
   rr:subjectMap [
     rr:template "https://research.tib.eu/ldm/{id}";
-    rr:class dcat:dataset;
   ];
 
   rr:predicateObjectMap [
@@ -201,13 +208,13 @@
 
   rr:subjectMap [
     rr:template "https://research.tib.eu/ldm/{doi}";
-    rr:class dcat:dataset;
+    rr:class dcat:Dataset;
   ];
 
   rr:predicateObjectMap [
     rr:predicate dcat:distribution;
     rr:objectMap [
-      rml:reference "url"
+      rr:template "{url}"
     ]
   ].
 

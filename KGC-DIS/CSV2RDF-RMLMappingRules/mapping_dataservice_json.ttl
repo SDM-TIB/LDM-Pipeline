@@ -27,6 +27,14 @@
   ];
 
   rr:predicateObjectMap [
+    rr:predicate dct:identifier;
+    rr:objectMap [
+      rr:template "https://doi.org/{doi}";
+      rr:termType rr:Literal
+    ]
+  ];
+
+  rr:predicateObjectMap [
     rr:predicate dct:title;
     rr:objectMap [
       rml:reference "title"
@@ -156,7 +164,7 @@
   rr:predicateObjectMap [
     rr:predicate dcat:keyword;
     rr:objectMap [
-      rml:reference "name"
+      rr:template "https://research.tib.eu/ldm/{id}"
     ]
   ].
 
@@ -169,7 +177,7 @@
   ];
 
   rr:subjectMap [
-    rr:template "https://research.tib.eu/ldm/{id}";    
+    rr:template "https://research.tib.eu/ldm/{id}";
   ];
   rr:predicateObjectMap [
     rr:predicate dct:title;
@@ -207,7 +215,7 @@
   rr:predicateObjectMap [
     rr:predicate dcat:distribution;
     rr:objectMap [
-      rml:reference "url"
+      rr:template "{url}"
     ]
   ].
 
@@ -316,6 +324,6 @@
   rr:predicateObjectMap [
     rr:predicate dcat:servesDataset;
     rr:objectMap [
-      rml:reference "rel_doi"
+      rr:template "{rel_doi}"
     ]
   ].
