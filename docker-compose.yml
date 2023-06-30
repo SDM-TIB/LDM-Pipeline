@@ -89,7 +89,7 @@ services:
     
           
   ldm_detrusty:
-    image: sdmtib/detrusty:0.12.0
+    image: sdmtib/detrusty:0.12.3
     hostname: detrusty
     container_name: ldm_detrusty
     domainname: ldm
@@ -101,6 +101,10 @@ services:
       - ldm
     depends_on:
       - ldmkg
+    environment:
+      JOIN_STARS_LOCALLY: "False"
+    restart: always
+
 
 networks:
   ldm:
